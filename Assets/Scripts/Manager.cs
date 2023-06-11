@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
+    public float money;
     public Text timerText;
+    public Text moneyText;
     public float timeRemaining = 90f;
+
+    public int MoneyMultiplier = 1;
+    public int TimerScale = 0;
 
     private void Update()
     {
@@ -20,6 +25,7 @@ public class Manager : MonoBehaviour
             timeRemaining = 0;
             // Zaman doldu game over UI þeyleri
         }
+        moneyText.text = "Money: " + money + "$";
     }
 
     private void UpdateTimerDisplay()
