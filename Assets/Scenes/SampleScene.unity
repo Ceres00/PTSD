@@ -875,7 +875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796420900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.68, y: -2.21, z: 0}
+  m_LocalPosition: {x: -6.02, y: -2.21, z: 0}
   m_LocalScale: {x: 11.891808, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1029,6 +1029,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1533701ce8ac7f646b7a5a576c664080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoneyMultiplier: 1
+  TimerScale: 0
+  SpeedMultiplier: 1
+  JumpMult: 1
+  money: 0
+  timerText: {fileID: 0}
+  moneyText: {fileID: 0}
+  timeRemaining: 90
   speed: 4
   acceleration: 10
   deceleration: 10
@@ -1106,8 +1114,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a4f52e824ffcd7459291f7e544c0334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoneyMultiplier: 1
+  TimerScale: 0
+  SpeedMultiplier: 1
+  JumpMult: 1
   money: 0
   timerText: {fileID: 630907972}
+  moneyText: {fileID: 0}
   timeRemaining: 90
 --- !u!4 &1399352925
 Transform:
@@ -1448,7 +1461,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1904976507}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 49f68b682d132bf42b06e54413a55cd9, type: 3}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1904976507
 MonoBehaviour:
   m_ObjectHideFlags: 0

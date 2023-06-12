@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
+    public float MoneyMultiplier = 1;
+    public float TimerScale = 0;
+    public float SpeedMultiplier = 1;
+    public float JumpMult = 1;
+
     public float money;
     public Text timerText;
     public Text moneyText;
     public float timeRemaining = 90f;
 
-    public int MoneyMultiplier = 1;
-    public int TimerScale = 0;
+
 
     private void Update()
     {

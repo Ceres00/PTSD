@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Manager
 {
     private float horizontal;
     private bool isFacingRight = true;
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower * JumpMult);
             isJumping = true;
             jumpCounter = 0;
         }
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float targetVelocityX = horizontal * speed;
+        float targetVelocityX = horizontal * speed * SpeedMultiplier;
         float accelerationRate = horizontal == 0 ? deceleration : acceleration;
         rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, targetVelocityX, accelerationRate * Time.deltaTime), rb.velocity.y);
 
@@ -108,8 +108,8 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetKeyUp(KeyCode.Space) || boostCount <= 0) && !isBoostCooldown)
         {
             isBoosting = false;
-            speed = 4f; ;
-            jumpingPower = 4f;
+            speed = 4f * SpeedMultiplier; 
+            jumpingPower = 4f * JumpMult;
         }
 
         if (!isBoosting && boostCount < boostCapacity)
@@ -126,8 +126,8 @@ public class PlayerMovement : MonoBehaviour
             if (boostCount <= 0f)
             {
                 isBoosting = false;
-                speed = 4f;
-                jumpingPower = 4f;
+                speed = 4f * SpeedMultiplier;
+                jumpingPower = 4f * JumpMult;
                 isBoostCooldown = true;
                 boostCooldownTimer = boostCooldownTime;
             }
