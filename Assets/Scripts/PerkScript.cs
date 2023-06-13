@@ -26,6 +26,12 @@ public class PerkScript : MonoBehaviour
         Perk2.interactable = false;
         Perk3.interactable = false;
     }
+    private void Start()
+    {
+        manager = FindObjectOfType<Manager>();
+        passengerScript = FindObjectOfType<PassengerScript>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
 
     void Update()
     {
@@ -34,6 +40,7 @@ public class PerkScript : MonoBehaviour
             PauseGame();
             ShowPerkMenu();
         }
+
         if (manager.money > 100)
         {
             Perk2.interactable = true;

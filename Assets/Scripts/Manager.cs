@@ -12,7 +12,7 @@ public class Manager : MonoBehaviour
     public float money = 0;
     public Text timerText;
     public Text moneyText;
-    public float timeRemaining = 90f;
+    public float timeRemaining = 20f;
 
 
     private void Update()

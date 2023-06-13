@@ -26,6 +26,12 @@ public class NerfScript : MonoBehaviour
         Nerf2.interactable = false;
         Nerf3.interactable = false;
     }
+    private void Start()
+    {
+        manager = FindObjectOfType<Manager>();
+        passengerScript = FindObjectOfType<PassengerScript>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
 
     void Update()
     {

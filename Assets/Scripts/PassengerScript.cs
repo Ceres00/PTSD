@@ -6,7 +6,7 @@ public class PassengerScript : MonoBehaviour
 {
     public GameObject[] passengers;
     public GameObject[] destinations;
-    private bool isTransporting = false;
+    public bool isTransporting = false;
 
     public int completedTransportationsPerk = 0;
     public int completedTransportationsNerf = 0;
@@ -19,6 +19,12 @@ public class PassengerScript : MonoBehaviour
         passengers = GameObject.FindGameObjectsWithTag("Passenger");
         destinations = GameObject.FindGameObjectsWithTag("Destination");
         RandomizePassengersAndDestinations();
+
+        manager = FindObjectOfType<Manager>();
+        if (manager == null)
+        {
+            Debug.LogError("Manager component not found in the scene.");
+        }
     }
 
     private void RandomizePassengersAndDestinations()
@@ -37,30 +43,9 @@ public class PassengerScript : MonoBehaviour
         }
 
         passengers[0].SetActive(true);
-        destinations[0].SetActive(true);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (isTransporting)
-            {
-                passengers[0].SetActive(true);
-                destinations[0].SetActive(false);
-                isTransporting = false;
-                GiveMoney();
-            }
-            else
-            {
-                passengers[0].SetActive(false);
-                destinations[0].SetActive(true);
-                isTransporting = true;
-            }
-        }
-    }
-
-    private void GiveMoney()
+    
+    public void GiveMoney()
     {
         float moneyEarned = manager.timeRemaining * 2f;
         manager.money += moneyEarned;
