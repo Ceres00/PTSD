@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassengerScript : Manager
+public class PassengerScript : MonoBehaviour
 {
     public GameObject[] passengers;
     public GameObject[] destinations;
     private bool isTransporting = false;
 
-    public int completedTransportations = 0;
+    public int completedTransportationsPerk = 0;
+    public int completedTransportationsNerf = 0;
+    public bool Change = false;
 
-    void Awake()
+    private Manager manager;
+
+    private void Start()
     {
         passengers = GameObject.FindGameObjectsWithTag("Passenger");
         destinations = GameObject.FindGameObjectsWithTag("Destination");
-    }
-
-    void Start()
-    {
         RandomizePassengersAndDestinations();
     }
 
-    void RandomizePassengersAndDestinations()
+    private void RandomizePassengersAndDestinations()
     {
         Shuffle(passengers);
         Shuffle(destinations);
@@ -40,7 +40,7 @@ public class PassengerScript : Manager
         destinations[0].SetActive(true);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -52,7 +52,7 @@ public class PassengerScript : Manager
                 GiveMoney();
             }
             else
-            {              
+            {
                 passengers[0].SetActive(false);
                 destinations[0].SetActive(true);
                 isTransporting = true;
@@ -60,17 +60,25 @@ public class PassengerScript : Manager
         }
     }
 
-    void GiveMoney()
+    private void GiveMoney()
     {
-        float moneyEarned = timeRemaining * 2f; 
-        money += moneyEarned;
+        float moneyEarned = manager.timeRemaining * 2f;
+        manager.money += moneyEarned;
         Debug.Log("Earned money: " + moneyEarned);
 
-        completedTransportations++;
+        if (Change)
+        {
+            completedTransportationsPerk++;
+        }
+        else
+        {
+            completedTransportationsNerf++;
+        }
+
         RandomizePassengersAndDestinations();
     }
 
-    void Shuffle(GameObject[] array)
+    private void Shuffle(GameObject[] array)
     {
         int n = array.Length;
         while (n > 1)

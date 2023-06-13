@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : Manager
+public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
@@ -23,6 +23,9 @@ public class PlayerMovement : Manager
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+    public float SpeedMultiplier = 1;
+    public float JumpMult = 1;
 
     bool isBoostCooldown;
     float boostCooldownTimer;

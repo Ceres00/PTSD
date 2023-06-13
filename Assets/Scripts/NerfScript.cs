@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PerkScript : MonoBehaviour
+public class NerfScript : MonoBehaviour
 {
-    public GameObject perkMenu;
+    public GameObject nerfMenu;
     private bool isGamePaused = false;
-    private bool isPerkMenuActive = false;
+    private bool isNerfMenuActive = false;
 
-    public Button Perk1;
-    public Button Perk2;
-    public Button Perk3;
+    public Button Nerf1;
+    public Button Nerf2;
+    public Button Nerf3;
 
     private PassengerScript passengerScript;
     private Manager manager;
@@ -19,37 +19,37 @@ public class PerkScript : MonoBehaviour
 
     void Awake()
     {
-        perkMenu.SetActive(false);
-        Perk1.onClick.AddListener(FirstPerk);
-        Perk2.onClick.AddListener(SecondPerk);
-        Perk3.onClick.AddListener(ThirdPerk);
-        Perk2.interactable = false;
-        Perk3.interactable = false;
+        nerfMenu.SetActive(false);
+        Nerf1.onClick.AddListener(FirstNerf);
+        Nerf2.onClick.AddListener(SecondNerf);
+        Nerf3.onClick.AddListener(ThirdNerf);
+        Nerf2.interactable = false;
+        Nerf3.interactable = false;
     }
 
     void Update()
     {
-        if (!isPerkMenuActive && passengerScript.completedTransportationsPerk >= 4)
+        if (!isNerfMenuActive && passengerScript.completedTransportationsNerf >= 4)
         {
             PauseGame();
-            ShowPerkMenu();
+            ShowNerfMenu();
         }
         if (manager.money > 100)
         {
-            Perk2.interactable = true;
+            Nerf2.interactable = true;
         }
         else
         {
-            Perk2.interactable = false;
+            Nerf2.interactable = false;
         }
-
+        
         if (manager.money > 200)
         {
-            Perk3.interactable = true;
+            Nerf3.interactable = true;
         }
         else
         {
-            Perk3.interactable = false;
+            Nerf3.interactable = false;
         }
     }
     void PauseGame()
@@ -62,44 +62,44 @@ public class PerkScript : MonoBehaviour
         isGamePaused = false;
         Time.timeScale = 1;
     }
-    void ShowPerkMenu()
+    void ShowNerfMenu()
     {
-        isPerkMenuActive = true;
-        perkMenu.SetActive(true);
+        isNerfMenuActive = true;
+        nerfMenu.SetActive(true);
         passengerScript.completedTransportationsPerk = 0;
     }
-    void ChoosePerk()
+    void ChooseNerf()
     {
-        perkMenu.SetActive(false);
-        isPerkMenuActive = false;
+        nerfMenu.SetActive(false);
+        isNerfMenuActive = false;
         passengerScript.Change = !passengerScript.Change;
         ResumeGame();
     }
-    void FirstPerk()
+    void FirstNerf()
     {
         playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
         manager.TimerScale = 0;
-        manager.MoneyMultiplier = 2;
-        ChoosePerk();
+        manager.MoneyMultiplier = 0.5f;
+        ChooseNerf();
     }
-    void SecondPerk()
+    void SecondNerf()
     {
         playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
-        manager.TimerScale = 20;
+        manager.TimerScale = -20;
         manager.timeRemaining = manager.timeRemaining + manager.TimerScale;
         manager.MoneyMultiplier = 1;
-        manager.money -= 100;
-        ChoosePerk();
+        manager.money = manager.money - 100;
+        ChooseNerf();
     }
-    void ThirdPerk()
+    void ThirdNerf()
     {
-        playerMovement.JumpMult = 1.2f;
-        playerMovement.SpeedMultiplier = 1.2f;
+        playerMovement.JumpMult = 0.8f;
+        playerMovement.SpeedMultiplier = 0.8f;
         manager.TimerScale = 0;
         manager.MoneyMultiplier = 1;
-        manager.money -= 200;
-        ChoosePerk();
+        manager.money = manager.money - 200;
+        ChooseNerf();
     }
 }
