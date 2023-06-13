@@ -7,14 +7,10 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private bool isFacingRight = true;
 
-    [SerializeField] private float speed = 4f;
+    [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float deceleration = 10f;
     [SerializeField] private float maxSpeed = 8f;
-    [SerializeField] private float jumpingPower = 4f;
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float jumpTime;
-    [SerializeField] private float jumpMultiplier;
     [SerializeField] private float boostCapacity;
     [SerializeField] private float boostCount;
     [SerializeField] private float boostRegenRate;
@@ -25,78 +21,40 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     public float SpeedMultiplier = 1;
-    public float JumpMult = 1;
 
     bool isBoostCooldown;
     float boostCooldownTimer;
     bool isBoosting;
-    bool isJumping;
-    float jumpCounter;
 
-    Vector2 vecGravity;
+    private Vector2 moveDirection;
 
     private void Start()
     {
-        vecGravity = new Vector2(0, -Physics2D.gravity.y);
     }
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower * JumpMult);
-            isJumping = true;
-            jumpCounter = 0;
-        }
-
-        if (rb.velocity.y > 0 && isJumping)
-        {
-            jumpCounter += Time.deltaTime;
-            if (jumpCounter > jumpTime) isJumping = false;
-
-            float t = jumpCounter / jumpTime;
-            float currentJumpM = jumpMultiplier;
-
-            if (t > 0.5f)
-            {
-                currentJumpM = jumpMultiplier * (1 - t);
-            }
-
-            rb.velocity += currentJumpM * Time.deltaTime * vecGravity;
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            isJumping = false;
-            jumpCounter = 0;
-
-            if (rb.velocity.y > 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.6f);
-            }
-        }
-
-        if (rb.velocity.y < 0)
-        {
-            rb.velocity -= fallMultiplier * Time.deltaTime * vecGravity;
-        }
-
+        ProcessInputs();
         Boost();
         Flip();
     }
 
     private void FixedUpdate()
     {
-        float targetVelocityX = horizontal * speed * SpeedMultiplier;
-        float accelerationRate = horizontal == 0 ? deceleration : acceleration;
-        rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, targetVelocityX, accelerationRate * Time.deltaTime), rb.velocity.y);
+        Move();
+    }
+    void ProcessInputs()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
 
-        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
-        {
-            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
-        }
+        moveDirection = new Vector2(moveX, moveY).normalized;
+    }
+
+    void Move()
+    {
+        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 
     private void Boost()
@@ -104,15 +62,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && boostCount > 0 && !isBoostCooldown)
         {
             isBoosting = true;
-            speed *= 1.3f;
-            jumpingPower *= 1.3f;
+            moveSpeed *= 1.3f;
         }
 
         if ((Input.GetKeyUp(KeyCode.Space) || boostCount <= 0) && !isBoostCooldown)
         {
             isBoosting = false;
-            speed = 4f * SpeedMultiplier; 
-            jumpingPower = 4f * JumpMult;
+            moveSpeed = 4f * SpeedMultiplier; 
         }
 
         if (!isBoosting && boostCount < boostCapacity)
@@ -129,8 +85,7 @@ public class PlayerMovement : MonoBehaviour
             if (boostCount <= 0f)
             {
                 isBoosting = false;
-                speed = 4f * SpeedMultiplier;
-                jumpingPower = 4f * JumpMult;
+                moveSpeed = 4f * SpeedMultiplier;
                 isBoostCooldown = true;
                 boostCooldownTimer = boostCooldownTime;
             }
@@ -146,18 +101,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-    }
 
     private void Flip()
     {
-        if (isFacingRight && horizontal < 0f || isFacingRight && horizontal > 0f)
+        if (!isFacingRight && horizontal < 0f || isFacingRight && horizontal >= 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
+            localScale.x = localScale.x * -1f;
             transform.localScale = localScale;
         }
     }

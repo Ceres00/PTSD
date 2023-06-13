@@ -5,9 +5,11 @@ using UnityEngine;
 public class Destination : MonoBehaviour
 {
     private PassengerScript t;
+    private Manager m;
     private void Start()
     {
         t = FindObjectOfType<PassengerScript>();
+        m = FindObjectOfType<Manager>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,6 +17,7 @@ public class Destination : MonoBehaviour
         {
             if (t.isTransporting)
             {
+                m.timeRemaining += 10;
                 t.passengers[0].SetActive(true);
                 t.destinations[0].SetActive(false);
                 t.isTransporting = false;

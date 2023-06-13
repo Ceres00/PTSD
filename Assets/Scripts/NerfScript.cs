@@ -65,14 +65,14 @@ public class NerfScript : MonoBehaviour
     }
     void ResumeGame()
     {
-        isGamePaused = false;
         Time.timeScale = 1;
+        isGamePaused = false;
     }
     void ShowNerfMenu()
     {
         isNerfMenuActive = true;
         nerfMenu.SetActive(true);
-        passengerScript.completedTransportationsPerk = 0;
+        passengerScript.completedTransportationsNerf = 0;
     }
     void ChooseNerf()
     {
@@ -81,17 +81,15 @@ public class NerfScript : MonoBehaviour
         passengerScript.Change = !passengerScript.Change;
         ResumeGame();
     }
-    void FirstNerf()
+    public void FirstNerf()
     {
-        playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
         manager.TimerScale = 0;
         manager.MoneyMultiplier = 0.5f;
         ChooseNerf();
     }
-    void SecondNerf()
+    public void SecondNerf()
     {
-        playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
         manager.TimerScale = -20;
         manager.timeRemaining = manager.timeRemaining + manager.TimerScale;
@@ -99,9 +97,8 @@ public class NerfScript : MonoBehaviour
         manager.money = manager.money - 100;
         ChooseNerf();
     }
-    void ThirdNerf()
+    public void ThirdNerf()
     {
-        playerMovement.JumpMult = 0.8f;
         playerMovement.SpeedMultiplier = 0.8f;
         manager.TimerScale = 0;
         manager.MoneyMultiplier = 1;

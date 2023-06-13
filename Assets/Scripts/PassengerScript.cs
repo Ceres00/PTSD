@@ -51,7 +51,7 @@ public class PassengerScript : MonoBehaviour
         manager.money += moneyEarned;
         Debug.Log("Earned money: " + moneyEarned);
 
-        if (Change)
+        if (!Change)
         {
             completedTransportationsPerk++;
         }

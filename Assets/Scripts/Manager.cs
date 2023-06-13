@@ -12,7 +12,7 @@ public class Manager : MonoBehaviour
     public float money = 0;
     public Text timerText;
     public Text moneyText;
-    public float timeRemaining = 20f;
+    public float timeRemaining = 20;
 
 
     private void Update()
@@ -20,7 +20,8 @@ public class Manager : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            UpdateTimerDisplay();
+            int timeText = (int)timeRemaining;
+            timerText.text = timeRemaining.ToString();
         }
         else
         {
@@ -28,13 +29,5 @@ public class Manager : MonoBehaviour
             // Zaman doldu game over UI þeyleri
         }
         moneyText.text = "Money: " + money + "$";
-    }
-
-    private void UpdateTimerDisplay()
-    {
-        int minutes = Mathf.FloorToInt(timeRemaining / 60);
-        int seconds = Mathf.FloorToInt(timeRemaining % 60);
-        string timeString = string.Format("{0:0}:{1:00}", minutes, seconds);
-        timerText.text = timeString;
     }
 }

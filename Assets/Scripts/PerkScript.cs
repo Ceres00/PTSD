@@ -82,17 +82,15 @@ public class PerkScript : MonoBehaviour
         passengerScript.Change = !passengerScript.Change;
         ResumeGame();
     }
-    void FirstPerk()
+    public void FirstPerk()
     {
-        playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
         manager.TimerScale = 0;
         manager.MoneyMultiplier = 2;
         ChoosePerk();
     }
-    void SecondPerk()
+    public void SecondPerk()
     {
-        playerMovement.JumpMult = 1;
         playerMovement.SpeedMultiplier = 1;
         manager.TimerScale = 20;
         manager.timeRemaining = manager.timeRemaining + manager.TimerScale;
@@ -100,9 +98,8 @@ public class PerkScript : MonoBehaviour
         manager.money -= 100;
         ChoosePerk();
     }
-    void ThirdPerk()
+    public void ThirdPerk()
     {
-        playerMovement.JumpMult = 1.2f;
         playerMovement.SpeedMultiplier = 1.2f;
         manager.TimerScale = 0;
         manager.MoneyMultiplier = 1;
