@@ -15,12 +15,30 @@ public class Destination : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (t.isTransporting)
+            if (t.isTransporting && !t.isPackageActive)
+            {
+                m.timeRemaining += 10;
+                t.destinations[0].SetActive(false);
+                t.isTransporting = false;
+                float randomNumber = Random.Range(0f, 1f);
+                if (randomNumber <= 0.2f)
+                {
+                    t.GivePackage();
+                }
+                else
+                {
+                    t.GiveMoney();
+                    t.passengers[0].SetActive(true);
+                }
+            }
+
+            else if (t.isTransporting && t.isPackageActive)
             {
                 m.timeRemaining += 10;
                 t.passengers[0].SetActive(true);
                 t.destinations[0].SetActive(false);
                 t.isTransporting = false;
+                t.isPackageActive = false;
                 t.GiveMoney();
             }
         }

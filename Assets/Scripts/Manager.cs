@@ -14,6 +14,8 @@ public class Manager : MonoBehaviour
     public Text moneyText;
     public float timeRemaining = 20;
 
+    public GameObject GameOver;
+
 
     private void Update()
     {
@@ -26,7 +28,7 @@ public class Manager : MonoBehaviour
         else
         {
             timeRemaining = 0;
-            // Zaman doldu game over UI þeyleri
+            GameOver.SetActive(true);
         }
         moneyText.text = "Money: " + money + "$";
     }

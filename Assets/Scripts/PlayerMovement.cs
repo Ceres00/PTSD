@@ -8,9 +8,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float acceleration = 10f;
-    [SerializeField] private float deceleration = 10f;
-    [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private float boostCapacity;
     [SerializeField] private float boostCount;
     [SerializeField] private float boostRegenRate;

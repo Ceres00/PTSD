@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passenger : MonoBehaviour
+public class Package : MonoBehaviour
 {
     private PassengerScript t;
     private void Start()
     {
         t = FindObjectOfType<PassengerScript>();
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!t.isPackageActive)
+            if (!t.isTransporting && t.isPackageActive) 
             {
-                t.passengers[0].SetActive(false);
+                t.packages[0].SetActive(false);
                 t.destinations[0].SetActive(true);
                 t.isTransporting = true;
+                t.isPackageActive = true; 
+
+                Debug.Log("Package activated!");
             }
         }
     }
