@@ -48,6 +48,15 @@ public class PassengerScript : MonoBehaviour
         }
 
         passengers[0].SetActive(true);
+        StartCoroutine(Hurry());
+    }
+
+    IEnumerator Hurry()
+    {
+        yield return new WaitForSeconds(10f);
+        passengers[0].SetActive(false);
+        packages[0].SetActive(false);
+        RandomizePassengersAndDestinations();
     }
 
     private void PackageDelivery()
@@ -71,6 +80,7 @@ public class PassengerScript : MonoBehaviour
         }
 
         packages[0].SetActive(true);
+        StartCoroutine(Hurry());
     }
 
     public void GiveMoney()
