@@ -14,7 +14,8 @@ public class Manager : MonoBehaviour
     public float money = 0;
     public Text timerText;
     public Text moneyText;
-    public float timeRemaining = 20;
+    public Text GameOverText;
+    public float timeRemaining = 15;
 
     public GameObject GameOver;
 
@@ -31,8 +32,12 @@ public class Manager : MonoBehaviour
         {
             timeRemaining = 0;
             GameOver.SetActive(true);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            GameOverText.text = "Score: " + money + "\n" + "Go to Menu";
         }
         moneyText.text = "Money: " + money + "$";
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

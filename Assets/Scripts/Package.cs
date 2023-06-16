@@ -13,12 +13,11 @@ public class Package : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!t.isTransporting && t.isPackageActive) 
+            if (!t.isTransporting) 
             {
                 t.packages[0].SetActive(false);
                 t.destinations[0].SetActive(true);
                 t.isTransporting = true;
-                t.isPackageActive = true; 
 
                 Debug.Log("Package activated!");
             }

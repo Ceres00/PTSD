@@ -15,7 +15,7 @@ public class Destination : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (t.isTransporting && !t.isPackageActive)
+            if (t.isTransporting)
             {
                 m.timeRemaining += 10;
                 t.destinations[0].SetActive(false);
@@ -30,16 +30,6 @@ public class Destination : MonoBehaviour
                     t.GiveMoney();
                     t.passengers[0].SetActive(true);
                 }
-            }
-
-            else if (t.isTransporting && t.isPackageActive)
-            {
-                m.timeRemaining += 10;
-                t.passengers[0].SetActive(true);
-                t.destinations[0].SetActive(false);
-                t.isTransporting = false;
-                t.isPackageActive = false;
-                t.GiveMoney();
             }
         }
     }

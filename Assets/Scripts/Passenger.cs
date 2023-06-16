@@ -14,12 +14,9 @@ public class Passenger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!t.isPackageActive)
-            {
-                t.passengers[0].SetActive(false);
-                t.destinations[0].SetActive(true);
-                t.isTransporting = true;
-            }
+            t.passengers[0].SetActive(false);
+            t.destinations[0].SetActive(true);
+            t.isTransporting = true;
         }
     }
 }

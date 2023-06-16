@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class NerfScript : MonoBehaviour
 {
     public GameObject nerfMenu;
-    private bool isGamePaused = false;
     private bool isNerfMenuActive = false;
 
     public Button Nerf1;
@@ -60,13 +59,12 @@ public class NerfScript : MonoBehaviour
     }
     void PauseGame()
     {
-        isGamePaused = true;
         Time.timeScale = 0;
     }
     void ResumeGame()
     {
         Time.timeScale = 1;
-        isGamePaused = false;
+        passengerScript.Change = !passengerScript.Change;
     }
     void ShowNerfMenu()
     {
@@ -78,7 +76,6 @@ public class NerfScript : MonoBehaviour
     {
         nerfMenu.SetActive(false);
         isNerfMenuActive = false;
-        passengerScript.Change = !passengerScript.Change;
         ResumeGame();
     }
     public void FirstNerf()

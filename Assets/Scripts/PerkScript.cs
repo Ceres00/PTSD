@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PerkScript : MonoBehaviour
 {
     public GameObject perkMenu;
-    private bool isGamePaused = false;
     private bool isPerkMenuActive = false;
 
     public Button Perk1;
@@ -61,13 +60,12 @@ public class PerkScript : MonoBehaviour
     }
     void PauseGame()
     {
-        isGamePaused = true;
         Time.timeScale = 0;
     }
     void ResumeGame()
     {
-        isGamePaused = false;
         Time.timeScale = 1;
+        passengerScript.Change = !passengerScript.Change;
     }
     void ShowPerkMenu()
     {
@@ -79,7 +77,6 @@ public class PerkScript : MonoBehaviour
     {
         perkMenu.SetActive(false);
         isPerkMenuActive = false;
-        passengerScript.Change = !passengerScript.Change;
         ResumeGame();
     }
     public void FirstPerk()

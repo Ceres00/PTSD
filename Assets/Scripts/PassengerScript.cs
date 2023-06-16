@@ -8,7 +8,6 @@ public class PassengerScript : MonoBehaviour
     public GameObject[] destinations;
     public GameObject[] packages;
     public bool isTransporting = false;
-    public bool isPackageActive = false;
 
     public int completedTransportationsPerk = 0;
     public int completedTransportationsNerf = 0;
@@ -125,8 +124,6 @@ public class PassengerScript : MonoBehaviour
         float moneyEarned = manager.timeRemaining * 2f;
         manager.money += moneyEarned;
         Debug.Log("Earned money: " + moneyEarned);
-
-        isPackageActive = true;
 
         if (hurryCoroutine != null)
         {
