@@ -15,6 +15,7 @@ public class PassengerScript : MonoBehaviour
     public bool Change = false;
 
     private Manager manager;
+    private Coroutine hurryCoroutine;
 
     private void Start()
     {
@@ -48,15 +49,23 @@ public class PassengerScript : MonoBehaviour
         }
 
         passengers[0].SetActive(true);
-        StartCoroutine(Hurry());
+
+        if (!isTransporting)
+        {
+            hurryCoroutine = StartCoroutine(Hurry());
+        }
     }
 
     IEnumerator Hurry()
     {
         yield return new WaitForSeconds(10f);
-        passengers[0].SetActive(false);
-        packages[0].SetActive(false);
-        RandomizePassengersAndDestinations();
+
+        if (!isTransporting)
+        {
+            passengers[0].SetActive(false);
+            packages[0].SetActive(false);
+            RandomizePassengersAndDestinations();
+        }
     }
 
     private void PackageDelivery()
@@ -74,13 +83,18 @@ public class PassengerScript : MonoBehaviour
         {
             destination.SetActive(false);
         }
+
         foreach (GameObject package in packages)
         {
             package.SetActive(false);
         }
 
         packages[0].SetActive(true);
-        StartCoroutine(Hurry());
+
+        if (!isTransporting)
+        {
+            hurryCoroutine = StartCoroutine(Hurry());
+        }
     }
 
     public void GiveMoney()
@@ -98,6 +112,11 @@ public class PassengerScript : MonoBehaviour
             completedTransportationsNerf++;
         }
 
+        if (hurryCoroutine != null)
+        {
+            StopCoroutine(hurryCoroutine);
+        }
+
         RandomizePassengersAndDestinations();
     }
 
@@ -108,6 +127,12 @@ public class PassengerScript : MonoBehaviour
         Debug.Log("Earned money: " + moneyEarned);
 
         isPackageActive = true;
+
+        if (hurryCoroutine != null)
+        {
+            StopCoroutine(hurryCoroutine);
+        }
+
         PackageDelivery();
     }
 
